@@ -1,0 +1,19 @@
+<!DOCTYPE HTML>
+<!-- src/BroodjesProject/Presentation/Beleg.twig --> 
+ 
+    <head> 
+        <meta charset=utf-8> 
+        <title>Beleg</title> 
+        <!--<link rel="stylesheet" href="css/styling.css">-->
+    </head> 
+    <body>
+        <h1>Maak uw keuze beleg</h1>
+        
+        <form method="get" action="afrekenenControll.php?action=afrekenen"> 
+            {% for beleg in belegLijst %}
+               <input type="checkbox" name="{{beleg.belegsoort}}" href="belegControll.php?keuze={{beleg.id}}"/>{{beleg.belegsoort}} &euro;{{beleg.prijs}} <br/>
+            {% endfor %}<br/><br />
+            <input type="submit" value="Afrekenen"/>
+        </form>
+    </body>
+    

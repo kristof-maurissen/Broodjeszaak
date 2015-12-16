@@ -17,7 +17,6 @@ class UserService {
         $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $characters = str_shuffle($characters);
         $newpaswoord = substr($characters, 0, $length);
-
         return $newpaswoord;
     }
     
@@ -25,9 +24,26 @@ class UserService {
         $userDAO = new UserDAO();
         $user = $userDAO->getUserByEmail($email);
         $userService = new UserService();
-        $newPaswoord = $userService->genRandomPaswoord(); 
+        $newPaswoord = $userService->genRandomPaswoord();
+        $paswoord = sha1();
         }
+    
+    public function checkEmail($email) {
+        $userDAO = new UserDAO();
+        $userEmail = $userDAO->getEmail($email);
         
+        
+    }
+    
+    public function controlUser($email, $pwoord) {
+        $userDao = new UserDAO();
+        $user = $userDao->getUserByEmail($email);
+        if (isset($user) && $user->getPaswoord() == $pwoord){
+        return true;
+        } else {
+        return false;
+        } 
+    }
     
 }
 

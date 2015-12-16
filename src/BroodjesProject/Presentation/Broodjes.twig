@@ -1,0 +1,22 @@
+<!DOCTYPE HTML>
+<!-- src/BroodjesProject/Presentation/Broodjes.twig --> 
+ 
+    <head> 
+        <meta charset=utf-8> 
+        <title>Broodjes</title> 
+        <link rel="stylesheet" href="css/styling.css">
+    </head> 
+    <body>
+        <section class="wrappercontent">
+        <h1>Maak uw broodkeuze</h1>
+        
+        <form method="get" action="belegControll.php?action=beleg"> 
+            {% for brood in broodLijst %}
+               <input type="radio" name="brood" href="bestelbroodjesControll.php?keuze={{brood.id}}"/>{{brood.broodsoort}} &euro;{{brood.prijs}} <br/>
+            {% endfor %}<br/><br />
+            <input type="submit" value="Ga verder naar beleg"/>
+        </form>
+        </section>
+    </body>
+    
+    
