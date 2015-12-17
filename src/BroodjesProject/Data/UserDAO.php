@@ -51,18 +51,26 @@ class UserDAO {
         return $userEmail;
     }
     
-    public function createUser($email, $paswoord, $geregistreerd) {
-        $email = $this->getEmail($email);
-           if($email->getVoorraad() <= 0 ) {
-               throw new GeenGeldigEmailException();
-            }    
-                
-            
-        $sql = "insert into users (email, paswoord, geregistreerd) values(:email, :paswoord, :geregistreerd)";
+    public function createUser($email, $paswoord) {
+        $sql = "insert into users (email, paswoord) values(:email, :paswoord)";
         $dbh = new PDO(DBConfig::$DB_CONNSTRING, DBConfig::$DB_USERNAME, DBConfig::$DB_PASSWORD);
         $stmt = $dbh->prepare($sql);
-        $stmt->execute(array( ":email" => $email, ":paswoord" => $paswoord, ":geregistreerd" => $geregistreerd));
+        $stmt->execute(array( ":email" => $email, ":paswoord" => $paswoord));
         $dbh = null;
+    }
+    
+    public function getUserByID($id) {
+        $sql = "select id, email, paswoord, geregistreerd from users where id = :id";
+        $dbh = new PDO(DBConfig::$DB_CONNSTRING, DBConfig::$DB_USERNAME, DBConfig::$DB_PASSWORD);
+        
+        $stmt = $dbh->prepare($sql); 
+        $stmt->execute(array(':id' => $id)); 
+        $rij = $stmt->fetch(PDO::FETCH_ASSOC);
+         
+        $users = Users::create($rij["id"], $rij["email"], $rij["paswoord"], $rij["geregistreerd"]);
+        
+        $dbh = null; 
+        return $users; 
     }
 }
 

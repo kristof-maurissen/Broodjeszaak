@@ -19,10 +19,22 @@ require_once ("Bootstrap.php");
        $paswoord= substr(sha1(rand()),0,4);
        print $paswoord;*/
         
-        $userService = new UserService();
-        $newPaswoord = $userService->genRandomPaswoord();
+       // $userService = new UserService();
+        //$newPaswoord = $userService->genRandomPaswoord();
 
-print $newPaswoord;
+//print $newPaswoord;
+        $userService = new UserService();
+        $userEmail = $userService->newUser("email@email");
+        print($userEmail);
+       // $newpas = $userService->genRandomPaswoord();
+       // print($newpas);
+        $pas = $userService->checkEmail("emailemail");
+        print_r($pas);
+        
+        
+        
+        
         ?>
+        
     </body>
 </html>

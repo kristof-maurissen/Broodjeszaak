@@ -13,26 +13,35 @@ class UserService {
         return $lijst; 
     }
     
-    public function genRandomPaswoord($length = 4) {
+    public function genRandomPaswoord() {
+        $length = 4;
         $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $characters = str_shuffle($characters);
         $newpaswoord = substr($characters, 0, $length);
         return $newpaswoord;
     }
     
-    public function newUser($email, $paswoord) {
-        $userDAO = new UserDAO();
-        $user = $userDAO->getUserByEmail($email);
+    public function newUser($email) {
         $userService = new UserService();
-        $newPaswoord = $userService->genRandomPaswoord();
-        $paswoord = sha1();
+        $paswoord = $userService->genRandomPaswoord();
+        $paswoord = sha1($paswoord);
+        $email = $userService->checkEmail($email);
+        $userDAO = new UserDAO();
+        $user = $userDAO->createUser($email, $paswoord);
+        $userService = new UserService();
+        
+        
         }
     
     public function checkEmail($email) {
-        $userDAO = new UserDAO();
-        $userEmail = $userDAO->getEmail($email);
-        
-        
+        if (filter_var($email, FILTER_VALIDATE_EMAIL) === true){
+        $userEmail = User::getEmail();
+        if ($userEmail !== $email){
+            $email = true;
+        } else {
+            return false;
+        }
+        }
     }
     
     public function controlUser($email, $pwoord) {
